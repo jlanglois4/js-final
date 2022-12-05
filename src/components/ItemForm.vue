@@ -39,12 +39,6 @@
                           required
                           outline>
             </v-text-field>
-            <!--            <v-text-field v-model="url"-->
-            <!--                          :rules="fieldRules"-->
-            <!--                          label="Item url"-->
-            <!--                          required-->
-            <!--                          outline>-->
-            <!--            </v-text-field>-->
             <v-file-input accept="image/*"
                           label="File input"
                           v-model="file"

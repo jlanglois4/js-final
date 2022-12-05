@@ -3,10 +3,12 @@
     <v-app-bar
       app
       color="white"
-
       flat
     >
-      <v-btn to="/" text>VueFirebase</v-btn>
+      <v-btn to="/" text>Vintage Electronics</v-btn>
+      <v-btn :to="{ name: 'About'}" text>About Us</v-btn>
+      <v-btn :to="{ name: 'Collection'}" text>Collection</v-btn>
+      <v-btn v-if="isAuthenticated" :to="{ name: 'Dashboard' }" text>Dashboard</v-btn>
       <v-spacer></v-spacer>
       <div v-if="!isAuthenticated">
         <v-btn :to="{ name: 'Login' }" text>Login</v-btn>
@@ -14,10 +16,9 @@
       </div>
 
       <div v-else>
+<!--        <v-btn :to="{ name: 'Dashboard' }">Dashboard</v-btn>-->
         <v-btn @click="logout" text>Logout</v-btn>
       </div>
-
-
     </v-app-bar>
     <v-main>
         <v-container>
