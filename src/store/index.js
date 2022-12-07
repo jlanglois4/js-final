@@ -15,11 +15,35 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserProfile(state, val, authState) {
-      state.isAuthenticated = !state.isAuthenticated
       state.userProfile = val
+      state.isAuthenticated = !state.isAuthenticated
     }
   },
   actions: {
+        //sign in
+    async login({dispatch}, form) {
+      const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password)
+
+      // fetch user prof
+
+      dispatch('fetchUserProfile', user)
+    },
+
+    // get user
+    async fetchUserProfile({ commit }, user) {
+
+      const userProfile = await fb.usersCollection.doc(user.uid).get()
+
+      commit('setUserProfile', userProfile.data())
+
+      router.push('/user')
+    },
+
+    async logout({ commit }) {
+      await fb.auth.signOut()
+      commit('setUserProfile', {})
+      router.push('/')
+    },
     // sign up new user
     async register({ dispatch }, form) {
       const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password)
@@ -32,31 +56,6 @@ export default new Vuex.Store({
 
       // fetch user profile
       dispatch('fetchUserProfile', user)
-    },
-
-    // get user
-    async fetchUserProfile({ commit }, user) {
-
-      const userProfile = await fb.usersCollection.doc(user.uid).get()
-
-      commit('setUserProfile', userProfile.data())
-
-      router.push('/dashboard')
-    },
-
-    //sign in
-    async login({dispatch}, form) {
-      const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password)
-
-      // fetch user prof
-
-      dispatch('fetchUserProfile', user)
-    },
-
-    async logout({ commit }) {
-      await fb.auth.signOut()
-      commit('setUserProfile', {})
-      router.push('/')
     }
   },
   modules: {

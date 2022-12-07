@@ -6,9 +6,13 @@
       flat
     >
       <v-btn to="/" text>Vintage Electronics</v-btn>
+      <v-divider
+          class="ml-1 mr-1"
+          vertical
+      ></v-divider>
       <v-btn :to="{ name: 'About'}" text>About Us</v-btn>
       <v-btn :to="{ name: 'Collection'}" text>Collection</v-btn>
-      <v-btn v-if="isAuthenticated" :to="{ name: 'Dashboard' }" text>Dashboard</v-btn>
+      <v-btn v-if="isAuthenticated" :to="{ name: 'UserPage' }" text>Personal Collection</v-btn>
       <v-spacer></v-spacer>
       <div v-if="!isAuthenticated">
         <v-btn :to="{ name: 'Login' }" text>Login</v-btn>

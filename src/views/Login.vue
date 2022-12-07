@@ -11,14 +11,14 @@
                   lazy-validation
           >
             <v-text-field v-model="email"
-                          :rules="emailRules"
+                          :rules="emailRequirements"
                           label="Email"
                           outlined
                           required
             >
             </v-text-field>
             <v-text-field v-model="password"
-                          :rules="passwordRules"
+                          :rules="passwordRequirements"
                           label="Password"
                           outlined
                           required
@@ -55,16 +55,16 @@
 export default {
   data() {
     return {
-      isLoading: false,
       show: false,
       valid: false,
+      isLoading: false,
       email: '',
       password: '',
-      emailRules: [
+      emailRequirements: [
         v => !!v || 'Email is required',
         v => /.+@.+/.test(v) || 'Email must be valid'
       ],
-      passwordRules: [
+      passwordRequirements: [
         v => !!v || 'Password is required',
         v => v.length >= 8 || 'Password must be 8 characters or more'
       ]

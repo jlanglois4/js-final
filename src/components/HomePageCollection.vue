@@ -17,9 +17,9 @@
             <p class="body-1">Price: ${{ item.price }}</p>
             <p>{{ item.description }}</p>
             <p> Posted By: {{item.author}}</p>
-            <p> email {{item.authorEmail}}</p>
+<!--            <p> email {{item.authorEmail}}</p>-->
 
-            <v-btn block color="primary" :href="'mailto:'+ item.authorEmail">Interested?</v-btn>
+            <v-btn block color="primary" :href="'mailto:'+ item.authorEmail">Interested? Email user.</v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -41,6 +41,8 @@ export default {
   },
 
   methods: {
+
+    // get items from firebase
     async getItems() {
       try {
         const querySnapshot = await itemsCollection.get()
@@ -56,14 +58,15 @@ export default {
           if (this.items.length < 6){
             this.items.push({
               id: doc.id,
-              title: doc.data().title,
               description: doc.data().description,
               price: doc.data().price,
+              title: doc.data().title,
               category: doc.data().category,
               image: img,
               img: doc.data().image,
+              authorEmail: authorQuery.data().email,
               author: authorQuery.data().name,
-              authorEmail: authorQuery.data().email
+
             })
           }
 

@@ -1,3 +1,4 @@
+<!--suppress ES6MissingAwait -->
 <template>
   <div class="dashboard">
     <h1>Welcome, {{ userProfile.name }}.</h1>
@@ -82,6 +83,8 @@ export default {
         img: doc.image
       })
     },
+
+    // update item reusing item form
     async updateItem(doc) {
       let img = ''
       if (doc.image) {
@@ -97,6 +100,8 @@ export default {
         img: doc.image
       })
     },
+
+    // get items from firebase
     async getItems() {
       try {
         const querySnapshot = await itemsCollection.where('userId', '==', auth.currentUser.uid).get()
@@ -127,6 +132,8 @@ export default {
       this.pTitle = title
     },
 
+
+    // delete item from firebase
     async deleteItem() {
       try {
         await itemsCollection.doc(this.pId).delete()

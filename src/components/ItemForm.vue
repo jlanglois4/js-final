@@ -16,25 +16,25 @@
                   lazy-validation
                   ref="form">
             <v-text-field v-model="title"
-                          :rules="fieldRules"
+                          :rules="fieldRequirements"
                           label="Item title"
                           required
                           outline>
             </v-text-field>
             <v-text-field v-model="description"
-                          :rules="fieldRules"
+                          :rules="fieldRequirements"
                           label="Item description"
                           required
                           outline>
             </v-text-field>
             <v-text-field v-model="price"
-                          :rules="fieldRules"
+                          :rules="fieldRequirements"
                           label="Item price"
                           required
                           outline>
             </v-text-field>
             <v-text-field v-model="category"
-                          :rules="fieldRules"
+                          :rules="fieldRequirements"
                           label="Item category"
                           required
                           outline>
@@ -44,7 +44,7 @@
                           v-model="file"
                           show-size>
             </v-file-input>
-            <p>Current image: <a v-if="oldImage" :href="oldImage">link</a></p>
+            <p>Current image: <a v-if="oldImg" :href="oldImg">link</a></p>
 
             <v-btn elevation="2"
                    color="primary"
@@ -95,10 +95,10 @@ export default {
       price: 0,
       category: '',
       file: null,
-      fieldRules: [
+      fieldRequirements: [
         v => !!v || 'this field is required'
       ],
-      oldImage: ''
+      oldImg: ''
     }
   },
   methods: {
@@ -112,8 +112,8 @@ export default {
         this.dialog = false
 
         // upload image
-        const fileRef = 'uploads/items/' + this.file.name
-        const snapshot = await storage.ref(fileRef).put(this.file)
+        const fileName = 'uploads/items/' + this.file.name
+        const snapshot = await storage.ref(fileName).put(this.file)
 
         let data = {
           userId: auth.currentUser.uid,
@@ -121,7 +121,7 @@ export default {
           description: this.description,
           price: this.price,
           category: this.category,
-          image: fileRef,
+          image: fileName,
         }
 
         const doc = await itemsCollection.add(data)
@@ -143,10 +143,11 @@ export default {
 
         let data = {
           userId: auth.currentUser.uid,
-          title: this.title,
           description: this.description,
           price: this.price,
           category: this.category,
+          title: this.title,
+
         }
 
         if(this.file) {
@@ -167,8 +168,8 @@ export default {
         const doc = await itemsCollection.doc(this.item.id).update(data)
 
         await this.resetForm()
-        this.isLoading = false
         this.dialog = false
+        this.isLoading = false
         data.index = this.index
         this.$emit('item:updated', data)
         alert('Item updated!')
@@ -180,10 +181,11 @@ export default {
     setData() {
       if(this.item) {
         this.title = this.item.title
-        this.description = this.item.description
         this.price = this.item.price
         this.category = this.item.category
-        this.oldImage = this.item.image
+        this.oldImg = this.item.image
+        this.description = this.item.description
+
       }
     }
   },

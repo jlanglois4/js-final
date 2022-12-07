@@ -18,9 +18,9 @@
             <p class="body-1">Price: ${{ item.price }}</p>
             <p>{{ item.description }}</p>
             <p> Posted By: {{item.author}}</p>
-            <p> email {{item.authorEmail}}</p>
+<!--            <p> email {{item.authorEmail}}</p>-->
 
-            <v-btn block color="primary" :href="'mailto:'+ item.authorEmail">Interested?</v-btn>
+            <v-btn block color="primary" :href="'mailto:'+ item.authorEmail">Interested? Email user.</v-btn>
           </v-card-text>
         </v-card>
       </v-col>

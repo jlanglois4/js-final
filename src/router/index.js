@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Register from "../views/Register"
-import Dashboard from "../views/Dashboard"
+import UserPage from "../views/UserPage"
 import Login from "../views/Login"
 import { auth } from '../firebase'
 import AboutUs from "../views/AboutUs"
@@ -30,9 +30,9 @@ const routes = [
     component: Register
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/user',
+    name: 'UserPage',
+    component: UserPage,
     meta: {
       auth: true
     }
